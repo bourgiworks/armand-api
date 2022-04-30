@@ -46,7 +46,7 @@ app.use('/api', userRoute);
 app.use('/api',commentRoute);
 let port =process.env.PORT || 7005;
 
-app.listen(port, () => {
+app.listen(port,'0.0.0.0', () => {
     console.log(`server start at ${port}` );
     mongoose.connect( `${process.env.DB_CONNECTION}`, {useNewUrlParser:true},()=>
  console.log ("Sucessful Connect to DB"));
