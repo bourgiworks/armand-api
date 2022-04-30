@@ -44,9 +44,10 @@ app.use(bodyParser.json())
 app.use('/api', articleRoute);
 app.use('/api', userRoute);
 app.use('/api',commentRoute);
+let port =process.env.PORT || 7005;
 
-app.listen(process.env.PORT, () => {
-    console.log(`server start at ${process.env.PORT}` );
+app.listen(port, () => {
+    console.log(`server start at ${port}` );
     mongoose.connect( `${process.env.DB_CONNECTION}`, {useNewUrlParser:true},()=>
  console.log ("Sucessful Connect to DB"));
 });
