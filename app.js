@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerExpress= require('swagger-ui-express');
 const { application } = require('express');
-const cookie =require('cookie-parser')
 require('dotenv/config');
 
 // Extend swagger
@@ -46,8 +45,8 @@ app.use('/api', articleRoute);
 app.use('/api', userRoute);
 app.use('/api',commentRoute);
 
-app.listen(process.env.PORT, () => {
-    console.log(`server start at ${process.env.PORT}` );
+app.listen(7005, () => {
+    console.log(`server start at 7005` );
     mongoose.connect( `${process.env.DB_CONNECTION}`, {useNewUrlParser:true},()=>
  console.log ("Sucessful Connect to DB"));
 });
