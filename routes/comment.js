@@ -18,7 +18,7 @@ router.post('/PostComment',check_auth,  (req, res) => {
        console.log(post)
     });
 
-    res.status(200).json({message : " Authatication Fails"});
+    res.status(400).json({message : " Authatication Fails"});
 });
  /**
  * @swagger
@@ -126,13 +126,13 @@ router.get('/GetOneComment/:postId', async (req,res)=>{
  *         description: The blog id
  *     responses:
  *       200:
- *         description: Tthi is discription of blog by id
+ *         description: Tthi is discription of comment by id
  *         contens:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Comment'
  *       404:
- *         description: The book was not found
+ *         description: The comment was not found
  */
 
    // delete specific commemt
@@ -160,9 +160,9 @@ router.delete ('/DeleteComment/:postId',check_auth, async (req,res) =>{
  * 
  *     responses:
  *       200:
- *         description: The book was deleted
+ *         description: The comment was deleted
  *       404:
- *         description: The book was not found
+ *         description: The comment was not found
  */
 
 module.exports = router

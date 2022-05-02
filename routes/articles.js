@@ -153,7 +153,7 @@ router.get('/GetOneArticle/:postId',async(req, res) => {
 
 router.delete ('/DeleteArticle/:postId',check_auth, async (req,res) =>{
     const post = await Article.deleteOne({_id: req.params.postId});
-    res.status(200).json({message : " Post Deleted"});
+    res.status(404).json({message : " Post Deleted"});
 
 });
 /**
@@ -174,9 +174,9 @@ router.delete ('/DeleteArticle/:postId',check_auth, async (req,res) =>{
  * 
  *     responses:
  *       200:
- *         description: The book was deleted
+ *         description: article  was deleted
  *       404:
- *         description: The book was not found
+ *         description: article was not found
  */
  //Update Post
 router.put('/UpdateArticle/:postId',check_auth, async(req,res) =>{

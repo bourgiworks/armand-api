@@ -1,0 +1,19 @@
+version: 2.1
+jobs:
+  run_test:
+    window:
+      - image: circlrci/node:10
+    steps:
+      - checkout
+      - run:
+         name: install npm dependencies
+         command: |
+          npm install --save
+      - run: Run Unit Tests
+         name: 
+         command: |
+          ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
+      - store_test_rrsults:
+         path: test-results
+      - store_artifacts:
+         path: test-results

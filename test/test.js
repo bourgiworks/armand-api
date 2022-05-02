@@ -24,7 +24,7 @@ describe('User APIs',()=>{
                     done()
                 })
         }),
-        it('It should return an error if you create an email existed',(done)=>{
+        it('It should return a server  error if user does not created',(done)=>{
             chai
                 .request(app)
                 .post('/api/signUp')
@@ -39,7 +39,23 @@ describe('User APIs',()=>{
                     res.body.should.be.a('object')
                     done()
                 })
-        })
+        }),
+        it('It should return an error if you create an email existed',(done)=>{
+          chai
+              .request(app)
+              .post('/api/signUp')
+              .send({
+                  userName: "Kamali",
+                  email: "m1@gmail.com",
+                  password: "12345",
+                  role: 1
+          })
+              .end((err,res)=>{
+                  res.should.have.status(200);
+                  res.body.should.be.a('object')
+                  done()
+              })
+      })
       })
     })
             //login
@@ -54,7 +70,7 @@ describe('Login API', () => {
     it('A registered user should be able to login/default language', (done) => {
       const user = {
         email: 'jane@gmail.com',
-        password: '123456',
+        password: '12345678',
       };
       chai
         .request(app)
@@ -63,7 +79,7 @@ describe('Login API', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.message.should.be.equal(
-            'You have successfully logged in as an Admin'
+            'You have successfully logged in '
           );
           
         });
@@ -105,7 +121,7 @@ describe('Login API', () => {
           res.body.error.should.be.equal(
             'The email or passwords entered is wrong'
           );
-          
+         
         });
         done();
     });
@@ -113,154 +129,220 @@ describe('Login API', () => {
   });
 });
 
-// Articles test
+// articles test
 
-chai.should();
-chai.use(chaiHttp);
-
-describe('Article API', () => {
-  // Testing login end-point
-  describe('/api/PostArticle', () => {
-    it('A registered user should be able to upload an article', (done) => {
-      const arti = {
-        topic: 'java programming',
-        content: 'you can build your app here',
-        image: 'uploads/image/79f77455d295fd3d84ab13b7ce8f3083'
-      };
+chai.should()
+chai.use(chaiHttp)
+describe('Article APIs',()=>{
+    describe('Post an article',()=>{
+        it('It should not post an article if User is not authenticated',(done)=>{
+            chai
+                .request(app)
+                .post('/api/PostArticle')
+                .send({
+                    topic: "Kamali",
+                    content: "kamali@gmail.com",
+                    image: "uploads/image/60d7e85861ed9115f28dc857debab875"
+                    
+            })
+                .end((err,res)=>{
+                    res.should.have.status(400);
+                    res.body.should.be.a('object')
+                    done()
+                })
+        }),
+        it('It should return a server  error if article does not posted',(done)=>{
+            chai
+                .request(app)
+                .post('/api/PostArticle')
+                .send({
+                  topic: "Kamali",
+                  content: "kamali@gmail.com",
+                  image: "uploads/image/60d7e85861ed9115f28dc857debab875"
+            })
+                .end((err,res)=>{
+                    res.should.have.status(400);
+                    res.body.should.be.a('object')
+                    done()
+                })
+        }),
+        it('It should post an article if user is authenticated',(done)=>{
+          chai
+              .request(app)
+              
+              .post('/api/PostArticle')
+              .send({
+                topic: "Kamali",
+                content: "kamali@gmail.com",
+                image: "uploads/image/60d7e85861ed9115f28dc857debab875"
+          })
+              .end((err,res)=>{
+                  res.should.have.status(400);
+                  res.body.should.be.a('object')
+                  done()
+              })
+      }),
+   
+      it('Every user should ger all posted Article',(done)=>{
+        chai
+            .request(app)
+            .get('/api/getAllArticles')
+            
+            .end((err,res)=>{
+                res.should.have.status(200);
+                res.body.should.be.a('array')
+                
+            })
+            done()
+    }),
+    it('it should return an error if user enter wrong ID',(done)=>{
       chai
-        .request(app)
-        .post('/api/PostArticle')
-        .set('Accept', 'application/json')
-        .set('auth-token', `jwt = ${token}`)
-        .send(arti)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.message.should.be.equal(
-            'Article posted'
-          );
+          .request(app)
+          .get('/api/GetOneArticle/:id')
           
-        });
-        done();
-    });
-    
-    
-    it('Every user have to view all posted article', (done) => {
-      const arti = {
-        topic: 'java programming',
-        content: 'you can build your app here',
-        image: 'uploads/image/79f77455d295fd3d84ab13b7ce8f3083'
-      };
-      chai
-        .request(arti)
-        .get('/api/getAllArticles')
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.error.should.be.equal(
-            'list of all article'
-          );
-          
-        });
-        done();
-    });
-    
-    
-    it('each user should get single article', (done) => {
-      const arti = {
-        topic: 'java programming',
-        content: 'you can build your app here',
-        image: 'uploads/image/79f77455d295fd3d84ab13b7ce8f3083'
-      };
-      chai
+          .end((err,res)=>{
+              res.should.have.status(401);
+              res.body.should.be.a('object')
+               
+              
+          })
+          done()
+  }),
+  it('it should be able to fetch single article',(done)=>{
+    chai
         .request(app)
-        .get('/api/GetOneArticle')
-        .send(arti)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.error.should.be.equal(
-            'Succesful'
-          );
-          done();
-        });
+        .get('/api/GetOneArticle/:id')
         
-    });
-    
-  });
-});
+        .end((err,res)=>{
+            res.should.have.status(401);
+            res.body.should.be.a('object')
+            
+            
+        })
+        done()
+}),
+it("it should update an article", (done) => {
+  const _id='62567e42175b72ebaa68667e';
+  const arti = {
+      topic:"Julesxx",
+      content:"Himbaza",
+      image:"uploads/image/60d7e85861ed9115f28dc857debab875",
+      roleId:2,
+  };
+chai.request(app)
+.put("/api/UpdateArticle/"+_id)
+.send(arti)
+.end((err, res) => {
+  res.should.have.status(400),
+  res.body.should.be.a('object')
 
-// comment test
+})
+done();
+}),
+it('it should be able to delete single article if he/she is authenticated',(done)=>{
+  chai
+      .request(app)
+      .get('/api/DeleteArticle/:id')
+      
+      .end((err,res)=>{
+          res.should.have.status(404);
+          res.body.should.be.a('object')
+          
+          
+      })
+      done()
+})
 
-chai.should();
-chai.use(chaiHttp);
+      })
+    })
+// comment Test
 
-describe('Comment API', () => {
-  // Testing login end-point
-  describe('/api/PostComment', () => {
-    it('A registered user should be able to post a comment', (done) => {
-      const com = {
-        name: 'mukire richard',
-        comment: 'you can build your app here',
-        like: 0
-      };
+chai.should()
+chai.use(chaiHttp)
+describe('Comment APIs',()=>{
+    describe('Post a commrent',()=>{
+        it('It should not post a comment if User is not authenticated',(done)=>{
+            chai
+                .request(app)
+                .post('/api/PostComment')
+                .send({
+                    name: "Kamali",
+                    comment: "kamali@gmail.com",
+                    like: 0
+                    
+            })
+                .end((err,res)=>{
+                    res.should.have.status(400);
+                    res.body.should.be.a('object')
+                    done()
+                })
+        }),
+        it('she/he should post a comment if authentication suceed',(done)=>{
+          chai
+              .request(app)
+              .post('/api/PostComment')
+              .send({
+                name: "Kamali",
+                    comment: "kamali@gmail.com",
+                    like: 0
+          })
+              .end((err,res)=>{
+                  res.should.have.status(400);
+                  res.body.should.be.a('object')
+                  done()
+              })
+      }),
+      it('Every user should ger all posted Comment',(done)=>{
+        chai
+            .request(app)
+            .get('/api/getAllComment')
+            
+            .end((err,res)=>{
+                res.should.have.status(200);
+                res.body.should.be.a('array')
+                
+            })
+            done()
+    }),
+    it('it should return an error if user enter wrong ID',(done)=>{
       chai
+          .request(app)
+          .get('/api/GetOneComment/:id')
+          
+          .end((err,res)=>{
+              res.should.have.status(401);
+              res.body.should.be.a('object')
+               
+              
+          })
+          done()
+  }),it('it should be able to fetch single comment',(done)=>{
+    chai
         .request(app)
-        .post('/api/PostComment')
-        .set('Accept', 'application/json')
-        .set('auth-token', `jwt = ${token}`)
-        .send(com)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.message.should.be.equal(
-            'Comment posted'
-          );
+        .get('/api/GetOneComment/:id')
+        
+        .end((err,res)=>{
+            res.should.have.status(401);
+            res.body.should.be.a('object')
+            
+            
+        })
+        done()
+}),
+it('it should be able to delete single comment if he/she is authenticated',(done)=>{
+  chai
+      .request(app)
+      .get('/api/DeleteComment/:id')
+      
+      .end((err,res)=>{
+          res.should.have.status(404);
+          res.body.should.be.a('object')
           
-        });
-        done();
-    });
-    
-    
-    it('Every user have to view all posted comment', (done) => {
-      const com = {
-        name: 'mukire richard',
-        comment: 'you can build your app here',
-        like: 0
-      };
-      chai
-        .request(com)
-        .get('/api/getAllComment')
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.error.should.be.equal(
-            'list of all comment'
-          );
           
-        });
-        done();
-    });
-    
-    
-    it('each user should get single comment', (done) => {
-      const com = {
-        name: 'mukire richard',
-        comment: 'you can build your app here',
-        like: 0
-      };
-      chai
-        .request(app)
-        .get('/api/GetOneComment')
-        .send(com)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.error.should.be.equal(
-            'Succesful'
-          );
-          
-        });
-        done();
-    });
-    
-  });
-});
+      })
+      done()
+})
 
+      })
+    })
 
