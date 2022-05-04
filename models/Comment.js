@@ -8,12 +8,10 @@ const CommentSchema= mongoose.Schema({
     comment:{
         type: String,
         required: true,
-        autoIncrement: true
     },
     like:{
         type:Number,
         required: false,
-        autoIncrement: true
     }
 
     

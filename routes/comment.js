@@ -18,7 +18,7 @@ router.post('/PostComment',check_auth,  (req, res) => {
        console.log(post)
     });
 
-    res.status(400).json({message : " Authatication Fails"});
+    res.json({message : " Authatication Fails"});
 });
  /**
  * @swagger
@@ -85,7 +85,7 @@ router.post('/PostComment',check_auth,  (req, res) => {
 //Get all comment
 router.get('/getAllComment', async (req,res) => {
     const post = await Comment.find()
-    res.status(200).res.json(post)
+   res.json(post)
 
 });
 /**
@@ -108,7 +108,7 @@ router.get('/getAllComment', async (req,res) => {
 //get specific comment
 router.get('/GetOneComment/:postId', async (req,res)=>{
     const post = await Comment.findById(req.params.postId);
-    res.status(200).json(post)
+    res.json(post)
        
    });
     /**
@@ -139,7 +139,7 @@ router.get('/GetOneComment/:postId', async (req,res)=>{
 
 router.delete ('/DeleteComment/:postId',check_auth, async (req,res) =>{
     const post = await Comment.deleteOne({_id: req.params.postId});
-    res.status(200).json({message : " Comment Deleted"});
+    res.json({message : " Comment Deleted"});
 
 });
 /**
