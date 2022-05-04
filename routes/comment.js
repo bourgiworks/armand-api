@@ -14,11 +14,9 @@ router.post('/PostComment',check_auth,  (req, res) => {
     like: req.body.like
     });
     createComment.save().then((post)=>{
-        res.status(200).send(post) 
+        res.send(post) 
        console.log(post)
     });
-
-    res.json({message : " Authatication Fails"});
 });
  /**
  * @swagger
