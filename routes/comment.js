@@ -92,11 +92,11 @@ router.get('/getAllComment', async (req,res) => {
  * @swagger
  * /api/getAllComment:
  *   get:
- *     summary: return list of all Article
+ *     summary: return list of all Comments
  *     tags: [Comment]
  *     responses:
  *       200:
- *         description: The list of Article
+ *         description: The list of Comments
  *         content:
  *           application/json:
  *             schema:
@@ -115,7 +115,7 @@ router.get('/GetOneComment/:postId', async (req,res)=>{
  * @swagger
  * /api/GetOneComment/{id}:
  *   get:
- *     summary: Article blog by id
+ *     summary: Comment by id
  *     tags: [Comment]
  *     parameters:
  *       - in: path
@@ -123,7 +123,7 @@ router.get('/GetOneComment/:postId', async (req,res)=>{
  *         schema:
  *           type: string
  *         required: true
- *         description: The blog id
+ *         description: The comment id
  *     responses:
  *       200:
  *         description: Tthi is discription of comment by id
@@ -146,7 +146,7 @@ router.delete ('/DeleteComment/:postId',check_auth, async (req,res) =>{
  * @swagger
  * /api/DeleteComment/{id}:
  *   delete:
- *     summary: remove Comment
+ *     summary: remove Comment 
  *     security:
  *      - ApiKeyAuth: []
  *     tags: [Comment]
