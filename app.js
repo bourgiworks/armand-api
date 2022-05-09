@@ -35,7 +35,18 @@ app.use('/api-swagger',swaggerExpress.serve, swaggerExpress.setup(swaggerDocs));
 
 //All schema 
 
-
+app.use(function (req, res, next) {
+    origin = req.headers.origin;
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'POST, PUT, OPTIONS, DELETE, GET');
+    res.header('Access-Control-Max-Age', '3600');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+    );
+    return next();
+  });
 
 
 //routes
@@ -53,3 +64,5 @@ app.listen(port,'0.0.0.0', () => {
 });
 
 module.exports = app;
+
+
