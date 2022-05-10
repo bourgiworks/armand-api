@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage:storage
 })
-router.post('/PostArticle',  (req, res) => {
+router.post('/PostArticle', check_auth, upload.single('image'), (req, res) => {
         
     var createPost = new Article ({
     topic: req.body.topic,
