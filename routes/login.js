@@ -113,15 +113,14 @@ router.post('/signUp',addUserValidation, (req, res, next)=>{
 
 
 router.post('/login',(req, res, next)=>{
-User.findOne({email: req.body.email})
+User.find({email: req.body.email})
 .exec()
 .then(user =>{
-    if(!user){
+    if(user.length < 1){
         return res.status(401).json({
             message :"User not Registered"
         })
     }
-    
     bcrypt.compare(req.body.password, user[0].password, (err, result)=>{
     if(err){
         return res.status(401).json({
