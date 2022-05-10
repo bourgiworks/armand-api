@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerExpress= require('swagger-ui-express');
 const { application } = require('express');
+const cors = require('cors');
 require('dotenv/config');
 
 // Extend swagger
