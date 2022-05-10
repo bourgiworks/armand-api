@@ -34,19 +34,27 @@ app.use('/api-swagger',swaggerExpress.serve, swaggerExpress.setup(swaggerDocs));
 
 
 //All schema 
-
-app.use(function (req, res, next) {
-    origin = req.headers.origin;
-    res.setHeader('Access-Control-Allow-Origin','http://localhost:7005');
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'POST, PUT, OPTIONS, DELETE, GET');
-    res.header('Access-Control-Max-Age', '3600');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
-    );
-    return next();
-  });
+const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+  app.use(cors(corsOpts));
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 
 //routes
