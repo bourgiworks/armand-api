@@ -15,12 +15,12 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage:storage
 })
-router.post('/PostArticle', upload.single('image'), (req, res) => {
+router.post('/PostArticle', (req, res) => {
         
     var createPost = new Article ({
     topic: req.body.topic,
     content: req.body.content,
-    image:req.file.path.replace(/\\/g, "/") 
+    
     });
     createPost.save().then((post)=>{
        res.send(post) 
