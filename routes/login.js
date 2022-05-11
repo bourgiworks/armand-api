@@ -137,7 +137,7 @@ User.find({email: req.body.email})
         })
         
         
-        return res.status(200).json({
+        return res.header('auth-token', token).status(200).json({
             message: "Sucessful logged in",
             token:token
         })
