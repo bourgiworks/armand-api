@@ -5,6 +5,7 @@ const app = express();
 const articleRoute = require('./routes/articles');
 const userRoute= require('./routes/login')
 const commentRoute = require('./routes/comment')
+const messageRoute = require('./routes/message')
 const bodyParser = require('body-parser');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerExpress= require('swagger-ui-express');
@@ -55,6 +56,7 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Access-Control-Request-Method, Access-Control-Request-Headers');
     res.header('Access-Control-Allow-Credentials', true);
+   
     next();
 });
 
@@ -63,6 +65,7 @@ app.use(function(req, res, next) {
 app.use(express.static('uploads'));
 app.use(bodyParser.json())
 app.use('/api', articleRoute);
+app.use('/api', messageRoute);
 app.use('/api', userRoute);
 app.use('/api',commentRoute);
 let port =process.env.PORT || 7005;
