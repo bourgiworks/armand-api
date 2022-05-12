@@ -6,7 +6,7 @@ const Message = require('../models/Message');
 
 // Submit a Comment
 
-router.post('/PostComment', (req, res) => {
+router.post('/PostMessage', (req, res) => {
         
     var createComment = new Message ({
     
