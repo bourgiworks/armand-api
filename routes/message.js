@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
 
-const check_auth =require('../middleware/check_auth');
+// const check_auth =require('../middleware/check_auth');
 
 // Submit a Comment
 
