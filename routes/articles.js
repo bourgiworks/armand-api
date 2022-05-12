@@ -3,7 +3,7 @@ const router = express.Router();
 const Article = require('../models/Article');
 const multer = require('multer');
 const path =require('path');
-// const check_auth =require('../middleware/check_auth');
+const check_auth =require('../middleware/check_auth');
 
 // Submit an article
 const storage = multer.diskStorage({
@@ -15,12 +15,12 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage:storage
 })
-router.post('/PostArticle', (req, res) => {
+router.post('/PostArticle', check_auth, upload.single('image'), (req, res) => {
         
     var createPost = new Article ({
     topic: req.body.topic,
     content: req.body.content,
-    
+    image:req.file.path.replace(/\\/g, "/") 
     });
     createPost.save().then((post)=>{
        res.send(post) 
@@ -151,7 +151,7 @@ router.get('/GetOneArticle/:postId',async(req, res) => {
 
    // delete specific post
 
-router.delete ('/DeleteArticle/:postId', async (req,res) =>{
+router.delete ('/DeleteArticle/:postId',check_auth, async (req,res) =>{
     const post = await Article.deleteOne({_id: req.params.postId});
     res.status(404).json({message : " Post Deleted"});
 
@@ -179,7 +179,7 @@ router.delete ('/DeleteArticle/:postId', async (req,res) =>{
  *         description: article was not found
  */
  //Update Post
-router.put('/UpdateArticle/:postId', async(req,res) =>{
+router.put('/UpdateArticle/:postId',check_auth, async(req,res) =>{
     const post = await Article.updateOne({_id:req.params.postId}, {$set: {topic: req.body.topic , content: req.body.content}});
     res.json({message : "Article Updated"});
     
