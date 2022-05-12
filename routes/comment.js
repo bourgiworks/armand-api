@@ -6,12 +6,12 @@ const check_auth =require('../middleware/check_auth');
 
 // Submit a Comment
 
-router.post('/PostComment',check_auth,  (req, res) => {
+router.post('/PostComment', (req, res) => {
         
     var createComment = new Comment ({
-    name: req.body.name,
-    comment: req.body.comment,
-    like: req.body.like
+    
+    comment: req.body.comment
+   
     });
     createComment.save().then((post)=>{
         res.send(post) 
@@ -135,7 +135,7 @@ router.get('/GetOneComment/:postId', async (req,res)=>{
 
    // delete specific commemt
 
-router.delete ('/DeleteComment/:postId',check_auth, async (req,res) =>{
+router.delete ('/DeleteComment/:postId', async (req,res) =>{
     const post = await Comment.deleteOne({_id: req.params.postId});
     res.json({message : " Comment Deleted"});
 
