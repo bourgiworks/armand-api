@@ -3,7 +3,7 @@ const router = express.Router();
 const Article = require('../models/Article');
 const multer = require('multer');
 const path =require('path');
-const check_auth =require('../middleware/check_auth');
+// const check_auth =require('../middleware/check_auth');
 
 // Submit an article
 const storage = multer.diskStorage({
