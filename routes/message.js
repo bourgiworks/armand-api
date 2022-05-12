@@ -16,6 +16,9 @@ router.post('/PostMessage',  (req, res) => {
     createMessage.save().then((post)=>{
         res.send(post) 
        console.log(post)
+       res.status(200).json({
+        message:"Message sent"
+
     });
 });
  /**
