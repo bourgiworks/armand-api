@@ -135,53 +135,7 @@ chai.should()
 chai.use(chaiHttp)
 describe('Article APIs',()=>{
     describe('Post an article',()=>{
-        it.skip('It should not post an article if User is not authenticated',(done)=>{
-            chai
-                .request(app)
-                .post('/api/PostArticle')
-                .send({
-                    topic: "Kamali",
-                    content: "kamali@gmail.com",
-                    image: "uploads/image/60d7e85861ed9115f28dc857debab875"
-                    
-            })
-                .end((err,res)=>{
-                    res.should.have.status(400);
-                    res.body.should.be.a('object')
-                    done()
-                })
-        }),
-        it.skip('It should return a server  error if article does not posted',(done)=>{
-            chai
-                .request(app)
-                .post('/api/PostArticle')
-                .send({
-                  topic: "Kamali",
-                  content: "kamali@gmail.com",
-                  image: "uploads/image/60d7e85861ed9115f28dc857debab875"
-            })
-                .end((err,res)=>{
-                    res.should.have.status(400);
-                    res.body.should.be.a('object')
-                    done()
-                })
-        }),
-        it.skip('It should post an article if user is authenticated',(done)=>{
-          chai
-              .request(app)
-              
-              .post('/api/PostArticle')
-              .send({
-                topic: "Kamali",
-                content: "kamali@gmail.com",
-                image: "uploads/image/60d7e85861ed9115f28dc857debab875"
-          })
-              .end((err,res)=>{
-                  res.should.have.status(400);
-                  res.body.should.be.a('object')
-                  done()
-              })
-      }),
+        
    
       it('Every user should ger all posted Article',(done)=>{
         chai
@@ -261,49 +215,8 @@ chai.should()
 chai.use(chaiHttp)
 describe('Comment APIs',()=>{
     describe('Post a commrent',()=>{
-        it.skip('It should not post a comment if User is not authenticated',(done)=>{
-            chai
-                .request(app)
-                .post('/api/PostComment')
-                .send({
-                    name: "Kamali",
-                    comment: "kamali@gmail.com",
-                    like: 0
-                    
-            })
-                .end((err,res)=>{
-                    res.should.have.status(400);
-                    res.body.should.be.a('object')
-                    done()
-                })
-        }),
-        it.skip('she/he should post a comment if authentication suceed',(done)=>{
-          chai
-              .request(app)
-              .post('/api/PostComment')
-              .send({
-                name: "Kamali",
-                    comment: "kamali@gmail.com",
-                    like: 0
-          })
-              .end((err,res)=>{
-                  res.should.have.status(400);
-                  res.body.should.be.a('object')
-                  done()
-              })
-      }),
-      it.skip('Every user should ger all posted Comment',(done)=>{
-        chai
-            .request(app)
-            .get('/api/getAllComment')
-            
-            .end((err,res)=>{
-                res.should.have.status(200);
-                res.body.should.be.a('array')
-                
-            })
-            done()
-    }),
+        
+      
     it('it should return an error if user enter wrong ID',(done)=>{
       chai
           .request(app)
@@ -328,21 +241,8 @@ describe('Comment APIs',()=>{
             
         })
         done()
-}),
-it.skip('it should be able to delete single comment if he/she is authenticated',(done)=>{
-  chai
-      .request(app)
-      .get('/api/DeleteComment/:id')
-      
-      .end((err,res)=>{
-          res.should.have.status(404);
-          res.body.should.be.a('object')
-          
-          
-      })
-      done()
 })
 
-      })
     })
+  })
 
